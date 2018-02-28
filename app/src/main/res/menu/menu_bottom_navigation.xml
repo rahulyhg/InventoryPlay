@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/nav_menu1"
+        android:icon="@drawable/ic_vector_home"
+        android:title="@string/nav_home"
+        android:visible="true" />
+    <item
+        android:id="@+id/nav_menu2"
+        android:icon="@drawable/ic_vector_health_check1"
+        android:title="@string/nav_health_check"
+        android:visible="true" />
+    <item
+        android:id="@+id/nav_menu3"
+        android:icon="@drawable/ic_vector_scan1"
+        android:title="@string/nav_scan_svc"
+        android:visible="true" />
+    <item
+        android:id="@+id/nav_menu4"
+        android:icon="@drawable/ic_vector_track1"
+        android:title="@string/nav_track_asn"
+        android:visible="true" />
+
+    <!--item
+        android:id="@+id/nav_menu5"
+        android:icon="@drawable/ic_vector_assistant1"
+        android:title="@string/nav_assistant"
+        android:visible="true" /-->
+</menu>

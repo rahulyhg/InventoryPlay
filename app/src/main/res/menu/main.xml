@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+
+    <item
+        android:id="@+id/search"
+        android:icon="@drawable/ic_vector_search"
+        android:iconTint="@color/colorPrimaryDark"
+        android:title="@string/search_title"
+        app:actionViewClass="android.widget.SearchView"
+        app:showAsAction="collapseActionView|ifRoom"
+        tools:ignore="UnusedAttribute" />
+
+    <item
+        android:id="@+id/action_setting"
+        android:icon="@drawable/ic_vector_settings"
+        android:iconTint="@color/white"
+        android:title="@string/action_settings"
+        app:showAsAction="never"
+        tools:ignore="UnusedAttribute" />
+</menu>

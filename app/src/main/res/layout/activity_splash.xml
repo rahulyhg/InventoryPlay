@@ -1,0 +1,70 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:id="@+id/launcher"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_centerInParent="true"
+        android:contentDescription="@string/app_name"
+        android:scaleType="centerCrop"
+        android:src="@drawable/app_bg"
+       />
+
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/launcher"
+        android:layout_gravity="top|center_horizontal"
+        android:text="@string/app_name"
+        android:layout_marginTop="?attr/actionBarSize"
+        android:textColor="@color/white"
+        android:textSize="32sp"
+        android:textStyle="bold"
+        android:visibility="visible" />
+
+    <ImageView
+        android:id="@+id/logo"
+        android:layout_width="112dp"
+        android:layout_height="24dp"
+       android:layout_gravity="bottom|center_horizontal"
+        android:layout_marginBottom="10dp"
+        android:contentDescription="@string/app_name"
+        android:src="@drawable/dellemc" />
+    <FrameLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/animCntr"
+        android:visibility="gone"
+        android:layout_gravity="center">
+        <TextView
+            android:id="@+id/anim5"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:contentDescription="@string/app_name"
+            android:background="@drawable/splash_drawable"
+            android:text=""
+            android:textSize="16dp"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:textColor="@color/white"
+            />
+    </FrameLayout>
+    <ProgressBar
+            android:id="@+id/progress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+        android:visibility="gone"
+          />
+    <com.jpardogo.android.googleprogressbar.library.GoogleProgressBar
+        style="?android:attr/progressBarStyleSmall"
+        android:visibility="gone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        app:type="folding_circles" />
+</FrameLayout>

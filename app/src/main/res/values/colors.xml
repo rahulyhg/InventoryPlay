@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <color name="colorPrimary">#007DB8</color>
+    <color name="colorPrimaryDark">#436B95</color>
+    <color name="colorAccent">#007DB8</color>
+    <color name="grey">#EEEEEE</color>
+    <color name="table_border">#22007DB8</color>
+    <color name="grey_top">#AAAAAA</color>
+    <color name="carban">#444444</color>
+    <color name="white">#ffffff</color>
+    <color name="black">#000000</color>
+    <color name="black_overlay">#66000000</color>
+    <color name="blockTitleStart">#007DB8</color>
+    <color name="blockTitleEnd">#99007DB8</color>
+    <color name="row1Start">#AAAAAA</color>
+    <color name="row1End">#EEEEEE</color>
+
+    <color name="tableHeader">#EE007DB8</color>
+    <color name="chartTitleBottom">#55B32E61</color>
+    <color name="disableBack">#666666</color>
+    <color name="green">#009688</color>
+
+    <color name="lime">#E65100</color>
+    <color name="brown">#795548</color>
+    <color name="magenta">#0075BA</color>
+    <color name="flatblue">#365685</color>
+
+    <color name="chart1">#FF6384</color>
+    <color name="chart2">#36A2EB</color>
+    <color name="chart3">#FFCE56</color>
+    <color name="chart4">#4BC0C0</color>
+    <color name="chart5">#9966FF</color>
+    <color name="chart6">#FF9F40</color>
+    <color name="chart7">#CA6D91</color>
+    <color name="chart8">#0066FF</color>
+    <color name="chart9">#AA0040</color>
+    <color name="chart10">#CAAA00</color>
+    <color name="tab_indicator">#FFFFFF</color>
+    <color name="tab_divider">#D7ECFB</color>
+
+    <color name="apjLight">#FFF5DD</color>
+    <color name="daoLight">#D7ECFB</color>
+    <color name="emeaLight">#FFFFFF</color>
+
+    <color name="headerTextDark">#007DB8</color>
+    <color name="headerTextLight">#007DB8</color>
+    <color name="tblColumnText">#007DB8</color>
+    <color name="bottomNavIcon">#747474</color>
+    <color name="blue_button_border">#0000ff</color>
+    <color name="gradient_end">#ff0000</color>
+    <color name="gradient_start">#ffff00</color>
+    <color name="tab_text_color">#55ffffff</color>
+    <color name="alphaBlack">#44000000</color>
+
+</resources>

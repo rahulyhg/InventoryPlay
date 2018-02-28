@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+    <group  android:id="@+id/group_item_1" android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_menu0"
+            android:icon="@drawable/ic_notifications_active_black_24dp"
+            android:title="@string/nav_notif"
+            android:iconTint="@color/colorPrimary"
+            android:visible="false" />
+        <item
+            android:id="@+id/nav_menu1"
+            android:icon="@drawable/ic_vector_home"
+            android:title="@string/nav_home"
+
+            android:iconTint="@color/colorPrimary"
+            android:visible="true" />
+        <item
+            android:id="@+id/nav_menu2"
+            android:icon="@drawable/ic_vector_health_check1"
+            android:title="@string/nav_health_check"
+            android:iconTint="@color/colorPrimary"
+            android:checked="true"
+            android:visible="true" />
+        <item
+            android:id="@+id/nav_menu3"
+            android:icon="@drawable/ic_vector_scan1"
+            android:title="@string/nav_scan_svc"
+            android:iconTint="@color/colorPrimary"
+            android:visible="true" />
+        <item
+            android:id="@+id/nav_menu4"
+            android:icon="@drawable/ic_vector_track1"
+            android:title="@string/nav_track_asn"
+            android:iconTint="@color/colorPrimary"
+            android:visible="true" />
+
+        <!--item
+            android:id="@+id/nav_menu5"
+            android:icon="@drawable/ic_vector_assistant1"
+            android:title="@string/nav_assistant"
+            android:iconTint="@color/colorPrimary"
+            android:visible="true" /-->
+    </group>
+    <group  android:id="@+id/group_item_2" android:checkableBehavior="single">
+        <item
+            android:id="@+id/navHelp"
+            android:icon="@android:drawable/ic_menu_help"
+            android:iconTint="@color/colorPrimary"
+            android:title="@string/help" />
+        <item
+            android:id="@+id/navFeedBack"
+            android:icon="@drawable/ic_nav_feedback"
+            android:iconTint="@color/colorPrimary"
+            android:title="@string/nav_feed_back" />
+        <item
+            android:id="@+id/navSetting"
+            android:icon="@drawable/ic_vector_settings"
+            android:iconTint="@color/colorPrimary"
+            android:title="@string/nav_setting" />
+    </group>
+</menu>

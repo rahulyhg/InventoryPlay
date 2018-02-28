@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+
+    android:background="@color/table_border"
+    android:clickable="true"
+    android:focusable="true">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:background="@color/white">
+
+        <LinearLayout
+            android:id="@+id/headerContainer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:orientation="horizontal"
+            tools:ignore="UselessParent">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@color/white"
+                android:gravity="end"
+                android:maxLines="1"
+                android:padding="5dp"
+                android:text="@string/app_name"
+                android:textColor="@color/colorPrimary"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/reg"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@color/white"
+                android:gravity="start"
+                android:maxLines="1"
+                android:padding="5dp"
+                android:text="@string/app_name"
+                android:textColor="@color/colorPrimary" />
+
+            <TextView
+                android:id="@+id/dynParam"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@color/white"
+                android:gravity="end"
+                android:maxLines="1"
+                android:padding="5dp"
+                android:text="@string/app_name"
+                android:textColor="@color/colorPrimary"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/svcTag"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@color/white"
+                android:gravity="start"
+                android:maxLines="1"
+                android:padding="5dp"
+                android:text="@string/app_name"
+                android:textColor="@color/colorPrimary" />
+
+        </LinearLayout>
+    </RelativeLayout>
+
+
+    <FrameLayout
+        android:id="@+id/rowViewContainer"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="30dp"
+        android:background="@color/white"
+        android:orientation="vertical"
+        android:paddingBottom="?attr/actionBarSize" />
+
+    <FrameLayout
+        android:id="@+id/columnViewContainer"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="30dp"
+        android:background="@color/white"
+        android:orientation="vertical"
+        android:paddingBottom="?attr/actionBarSize" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fabCompare"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="start|bottom"
+        android:src="@drawable/ic_view_only"
+        android:tint="@color/white"
+        app:layout_scrollFlags="scroll|enterAlways" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fabFirst"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end|bottom"
+        android:layout_marginEnd="180dp"
+
+        android:src="@drawable/ic_first_page"
+
+        android:tint="@color/white"
+        app:layout_scrollFlags="scroll|enterAlways" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fabPrev"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end|bottom"
+        android:layout_marginEnd="120dp"
+        android:src="@drawable/ic_navigate_before"
+        android:tint="@color/white"
+        app:layout_scrollFlags="scroll|enterAlways" />
+
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fabNext"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end|bottom"
+        android:layout_marginEnd="60dp"
+        android:src="@drawable/ic_navigate_next_black"
+
+        android:tint="@color/white"
+        app:layout_scrollFlags="scroll|enterAlways"
+        tools:ignore="UnusedAttribute" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fabLast"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end|bottom"
+        android:src="@drawable/ic_last_page"
+
+        android:tint="@color/white"
+
+        app:layout_scrollFlags="scroll|enterAlways" />
+
+    <com.dell.inventoryplay.utils.MovableFloatingActionButton
+        android:id="@+id/switchView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical|end"
+        android:src="@drawable/ic_view_column"
+
+        android:tint="@color/white"
+
+        app:layout_scrollFlags="scroll|enterAlways" />
+
+    <RelativeLayout
+        android:id="@+id/progressBarContainer"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clickable="true"
+        android:focusable="true"
+        android:visibility="gone">
+
+        <ProgressBar
+            android:id="@+id/progressBar"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_centerInParent="true"
+            android:layout_gravity="center" />
+
+    </RelativeLayout>
+
+</FrameLayout>

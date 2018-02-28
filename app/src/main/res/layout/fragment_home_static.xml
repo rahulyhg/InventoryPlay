@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/constraintLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white">
+
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="top"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+
+            <FrameLayout
+
+                android:id="@+id/gifContainer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                android:visibility="visible">
+
+                <ImageView
+                    android:id="@+id/gif"
+                    android:layout_width="220dp"
+                    android:layout_height="170dp"
+                    android:layout_gravity="center"
+                    android:contentDescription="@string/app_name"
+                    android:src="@drawable/dellofc" />
+            </FrameLayout>
+
+            <TextView
+                android:id="@+id/title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/gifContainer"
+                android:gravity="center"
+                android:padding="10dp"
+                android:text="@string/home_welcome"
+                android:textColor="@color/colorPrimary"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/desc"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/title"
+                android:gravity="center"
+                android:padding="10dp"
+                android:text="@string/home_desc"
+                android:textColor="@color/carban"
+                android:textSize="14sp" />
+
+
+            <android.support.v7.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/card_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/desc"
+                android:layout_gravity="center"
+                android:layout_margin="5dp"
+                card_view:cardCornerRadius="10dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/alertHeader"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:drawableEnd="@drawable/ic_vector_refresh_alert"
+                        android:drawableStart="@drawable/ic_warning_black_24dp"
+                        android:padding="10dp"
+                        android:text="No alert found."
+                        android:textColor="@color/colorPrimary"
+                        android:textStyle="normal"
+
+                        />
+
+                    <LinearLayout
+                        android:id="@+id/alertContainer"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="5dp">
+
+                    </LinearLayout>
+                </LinearLayout>
+
+
+            </android.support.v7.widget.CardView>
+
+        </RelativeLayout>
+    </android.support.v4.widget.NestedScrollView>
+
+</FrameLayout>
