@@ -22,7 +22,6 @@ class HealthCheckPagerAdapter extends FragmentPagerAdapter {
         pageTitle = activity.getResources().getStringArray(R.array.tab_health_check);
     }
     public static HealthCheckPagerAdapter newInstance(FragmentManager fm, FragmentActivity activity) {
-
         return new HealthCheckPagerAdapter( fm, activity);
     }
     @Override

@@ -1,3 +1,6 @@
+#custom files
+app/src/main/java/com/dell/inventoryplay/AppConfig.java
+
 # Built application files
 *.apk
 *.ap_

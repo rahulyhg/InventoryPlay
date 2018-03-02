@@ -40,17 +40,14 @@ import com.google.zxing.integration.android.IntentResult;
 public class InquiryPagerFragment extends Fragment {
     public static final String ARG_POSITION = "ARG_POSITION";
 
-    ViewGroup rootView;
-    MainActivity activity;
-    String[] transTypeArr;
-    TextView titleServiceTag;
-    EditText editServiceTag;
-    Button search;
-    ImageView scan;
-    ListView listView;
-    AsnResponse res;
-    String inputAsnId, inputParam2, inputParam1;
-    int tabNo;
+    private MainActivity activity;
+    private String[] transTypeArr;
+    private TextView titleServiceTag;
+    private EditText editServiceTag;
+    private ListView listView;
+    private AsnResponse res;
+    private String inputParam2, inputParam1;
+    private int tabNo;
 
     public static InquiryPagerFragment newInstance() {
         return new InquiryPagerFragment();
@@ -65,7 +62,7 @@ public class InquiryPagerFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        rootView = (ViewGroup) inflater.inflate(
+        ViewGroup rootView = (ViewGroup) inflater.inflate(
                 R.layout.fragment_inquiry_pager, container, false);
         setRetainInstance(true);
         Bundle bundle = getArguments();
@@ -78,10 +75,10 @@ public class InquiryPagerFragment extends Fragment {
     protected void setUp(View rootView) {
         titleServiceTag = rootView.findViewById(R.id.titleServiceTag);
         editServiceTag = rootView.findViewById(R.id.editServiceTag);
-        search = rootView.findViewById(R.id.search);
+        Button search = rootView.findViewById(R.id.search);
         listView = rootView.findViewById(R.id.spinner);
         listView.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
-        scan = rootView.findViewById(R.id.scan);
+        ImageView scan = rootView.findViewById(R.id.scan);
         TextView titleFlow = rootView.findViewById(R.id.titleFlow);
         Helper.getInstance(activity).createShape(titleFlow);
 
@@ -95,21 +92,21 @@ public class InquiryPagerFragment extends Fragment {
         switch (tabNo) {
             case 0:
                 scan.setVisibility(View.VISIBLE);
-                titleServiceTag.setText("Service Tag");
-                editServiceTag.setHint("Type/Scan Service Tag");
-                search.setText("Search By Service Tag");
+                titleServiceTag.setText(R.string.service_tag);
+                editServiceTag.setHint(R.string.scan_svc_tag);
+                search.setText(R.string.search_svc_atg);
                 break;
             case 1:
                 scan.setVisibility(View.GONE);
-                titleServiceTag.setText("Item");
-                search.setText("Search By Item");
-                editServiceTag.setHint("Type Item");
+                titleServiceTag.setText(R.string.item);
+                search.setText(R.string.search_item);
+                editServiceTag.setHint(R.string.type_item);
                 break;
             case 2:
                 scan.setVisibility(View.GONE);
-                titleServiceTag.setText("Location");
-                search.setText("Search By Location");
-                editServiceTag.setHint("Type Location");
+                titleServiceTag.setText(R.string.location);
+                search.setText(R.string.search_location);
+                editServiceTag.setHint(R.string.type_location);
                 break;
         }
 
@@ -157,7 +154,7 @@ public class InquiryPagerFragment extends Fragment {
         } else {
             IntentIntegrator integrator = new IntentIntegrator(activity);
             integrator.setDesiredBarcodeFormats(IntentIntegrator.ONE_D_CODE_TYPES);
-            integrator.setPrompt("Scan a barcode");
+            integrator.setPrompt(getString(R.string.scan_bar_code));
             integrator.setResultDisplayDuration(0);
             //integrator.setWide();  // Wide scanning rectangle, may work better for 1D barcodes
             integrator.setCameraId(0);  // Use a specific camera of the device
@@ -204,7 +201,7 @@ public class InquiryPagerFragment extends Fragment {
         inputParam1 = position != -1 ? transTypeArr[position] : null;
         inputParam2 = editServiceTag.getText().toString().trim();
 
-        if (inputParam1 != null &&  inputParam2.length() > 0) {
+        if (inputParam1 != null && inputParam2.length() > 0) {
             View view = activity.getCurrentFocus();
             if (view != null) {
                 activity.hideKeyboard();

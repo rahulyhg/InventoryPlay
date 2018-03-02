@@ -7,7 +7,6 @@ import com.android.volley.ParseError;
 import com.android.volley.Response;
 import com.android.volley.toolbox.HttpHeaderParser;
 import com.android.volley.toolbox.JsonRequest;
-import com.dell.inventoryplay.utils.AppLogger;
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
 
@@ -22,24 +21,12 @@ public class BaseGsonRequest<T> extends JsonRequest<T> {
     private final Map<String, String> headers;
     private final Response.Listener<T> listener;
 
-    /**
-     * Make a request and return a parsed object from JSON.
-     *
-     * @param url     URL of the request to make
-     * @param clazz   Relevant class object, for Gson's reflection
-     * @param headers Map of request headers
-     */
     public BaseGsonRequest(int method, String url, Class<T> clazz, JSONObject jsonRequest, Map<String, String> headers,
                            Response.Listener<T> listener, Response.ErrorListener errorListener) {
         super(method, url, (jsonRequest == null) ? null : jsonRequest.toString(), listener, errorListener);
-        AppLogger.e("json:::"+url);
-        AppLogger.e("json::::"+jsonRequest.toString());
         this.clazz = clazz;
-       // this.headers = headers;
-        //Dont set header for time being, other wise it wont work in datapower(401 error will get)
-        this.headers = null;
+        this.headers = headers;
         this.listener = listener;
-
         setRetryPolicy(new DefaultRetryPolicy(
                 5000,
                 DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
@@ -64,12 +51,12 @@ public class BaseGsonRequest<T> extends JsonRequest<T> {
             String json = new String(
                     response.data,
                     HttpHeaderParser.parseCharset(response.headers));
-            AppLogger.e("json::"+json);
+
             return Response.success(
                     gson.fromJson(json, clazz),
                     HttpHeaderParser.parseCacheHeaders(response));
         } catch (UnsupportedEncodingException | JsonSyntaxException e) {
-            AppLogger.e("json::::"+e.getMessage());
+
             return Response.error(new ParseError(e));
         }
     }

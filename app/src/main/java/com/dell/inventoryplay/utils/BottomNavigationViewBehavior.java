@@ -10,6 +10,7 @@ import android.widget.FrameLayout;
 
 /**
  * Created by Sasikanta_Sahoo on 11/29/2017.
+ * BottomNavigationViewBehavior
  */
 
 public class BottomNavigationViewBehavior extends CoordinatorLayout.Behavior<BottomNavigationView> {
@@ -23,11 +24,6 @@ public class BottomNavigationViewBehavior extends CoordinatorLayout.Behavior<Bot
         return super.onLayoutChild(parent, child, layoutDirection);
     }
 
-    /*@Override
-    public boolean onStartNestedScroll(CoordinatorLayout coordinatorLayout, BottomNavigationView child, View directTargetChild, View target, int nestedScrollAxes) {
-        return nestedScrollAxes == ViewCompat.SCROLL_AXIS_VERTICAL;
-    }
-*/
     @Override
     public void onNestedScroll(CoordinatorLayout coordinatorLayout, BottomNavigationView child, View target, int dxConsumed, int dyConsumed, int dxUnconsumed, int dyUnconsumed) {
         if (dyConsumed > 0) {

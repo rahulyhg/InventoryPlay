@@ -1,15 +1,13 @@
 <resources>
 
-    <!-- Base application theme. -->
     <style name="DellTheme" parent="Theme.AppCompat.Light.DarkActionBar">
-        <!--style name="AppTheme" parent="android:style/Theme.Material.Light.DarkActionBar"-->
-        <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
         <item name="android:textViewStyle">@style/DellThemeRobotoTextViewStyle</item>
         <item name="android:buttonStyle">@style/DellThemeRobotoButtonStyle</item>
     </style>
+
     <style name="DellTheme.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
@@ -25,6 +23,7 @@
         <item name="android:windowBackground">@null</item>
         <item name="android:windowNoTitle">true</item>
     </style>
+
     <style name="checkbox_style" parent="Theme.AppCompat.Light">
         <item name="colorPrimary">@color/white</item>
         <item name="colorPrimaryDark">@color/white</item>

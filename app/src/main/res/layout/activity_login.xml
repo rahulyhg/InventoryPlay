@@ -8,6 +8,7 @@
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:contentDescription="@string/app_name"
         android:scaleType="centerCrop"
         android:src="@drawable/dellofc" />
 
@@ -41,6 +42,7 @@
                 android:layout_height="100dp"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="10dp"
+                android:contentDescription="@string/todo"
                 android:src="@drawable/dell"
                 android:tint="@color/white" />
 
@@ -51,7 +53,7 @@
                 android:layout_below="@+id/dellLogo"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="5dp"
-                android:text="INVENTORY PLAY"
+                android:text="@string/login_inventory_play"
                 android:textColor="@color/white"
                 android:textSize="18sp"
                 android:textStyle="bold" />
@@ -66,7 +68,7 @@
                 android:background="@drawable/rounded_edittext"
                 android:drawablePadding="10dp"
                 android:drawableStart="@drawable/ic_perm_identity_black_24dp"
-                android:hint="USERNAME"
+                android:hint="@string/hint_username"
                 android:imeOptions="actionNext"
                 android:maxLines="1"
                 android:padding="10dp"
@@ -84,7 +86,7 @@
                 android:background="@drawable/rounded_edittext"
                 android:drawablePadding="10dp"
                 android:drawableStart="@drawable/ic_lock_open_black_24dp"
-                android:hint="PASSWORD"
+                android:hint="@string/hint_password"
                 android:imeOptions="actionGo"
                 android:inputType="textPassword"
                 android:maxLines="1"
@@ -116,7 +118,7 @@
                     android:id="@+id/remember"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Remember me"
+                    android:text="@string/remember_me"
                     android:textColor="@color/white" />
             </LinearLayout>
 
@@ -129,7 +131,7 @@
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="10dp"
                 android:background="@drawable/rounded_button"
-                android:text="LOGIN "
+                android:text="@string/login"
                 android:textColor="@color/white" />
 
 
@@ -143,6 +145,7 @@
             android:layout_marginBottom="?attr/actionBarSize"
             android:background="@android:color/transparent"
             android:clickable="true"
+            android:focusable="true"
             android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="@+id/constraintLayout"
             app:layout_constraintEnd_toEndOf="@+id/constraintLayout"
@@ -175,7 +178,7 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/progress"
                     android:gravity="center"
-                    android:text="Processing.."
+                    android:text="@string/processing"
                     android:textColor="@color/white" />
             </RelativeLayout>
 

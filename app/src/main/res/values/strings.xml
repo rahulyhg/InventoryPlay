@@ -43,7 +43,50 @@
         <item>ASN Dashboard</item>
         <item>Dell Assistant</item>
     </string-array>
-
+    <string name="help">Help</string>
+    <string name="nav_settings">Settings</string>
+    <string name="nav_notif">Health Check Alert</string>
+    <string name="action_share">share</string>
+    <string name="try_again_health_check">No health check found.try again later</string>
+    <string name="something_went_wrong">Something went wrong, try again in few seconds</string>
+    <string name="no_app_available">No App Available</string>
+    <string name="share">Share</string>
+    <string name="health_check_24hr">LAST 24 HOURS HEALTH CHECK REPORT</string>
+    <string name="health_check_7days">LAST 7 DAYS  HEALTH CHECK REPORT</string>
+    <string name="no_internet">No internet connection</string>
+    <string name="wait">Please wait..</string>
+    <string name="health_check_alert">Health Check Alert</string>
+    <string name="no_alert_found">No Alert Found.</string>
+    <string name="unable_to_process">Sorry, unable to process response now</string>
+    <string name="unable_to_share">Sorry,Unable to share report.</string>
+    <string name="no_health_check_share">No health check found to share</string>
+    <string name="health_check_show_all">Maximized all health check.</string>
+    <string name="health_check_hide_all">Minimized all health check.</string>
+    <string name="in_progress">In progress</string>
+    <string name="service_tag">Service Tag</string>
+    <string name="scan_svc_tag">Type/Scan Service Tag</string>
+    <string name="search_svc_atg">Search By Service Tag</string>
+    <string name="item">Item</string>
+    <string name="search_item">Search By Item</string>
+    <string name="type_item">Type Item</string>
+    <string name="location">Location</string>
+    <string name="search_location">Search By Location</string>
+    <string name="type_location">Type Location</string>
+    <string name="scan_bar_code">Scan a barcode</string>
+    <string name="invalid_credential">Invalid credential.</string>
+    <string name="more">more</string>
+    <string name="less">less</string>
+    <string name="hint_username">USERNAME</string>
+    <string name="hint_password">PASSWORD</string>
+    <string name="remember_me">Remember me</string>
+    <string name="login">LOGIN</string>
+    <string name="processing">Processing..</string>
+    <string name="login_inventory_play">INVENTORY PLAY</string>
+    <string name="loading">Loading..</string>
+    <string name="connect_internet_amp_tap_here"><![CDATA[Connect internet & tap here]]></string>
+    <string name="asn_header_information">ASN HEADER INFORMATION</string>
+    <string name="status_information">STATUS INFORMATION</string>
+    <string name="todo">TODO</string>
 
     <string name="home_desc_bck">
 		<![CDATA[
@@ -317,7 +360,6 @@
     <string name="inventory_heart_beat">Inventory Heart Beat</string>
     <string name="transaction_type">Transaction Type</string>
     <string name="search">Search</string>
-    <string name="asn_header_information">ASN HEADER INFORMATION</string>
     <string name="asn_app_information">ASN APP INFORMATION</string>
     <string name="name">name</string>
     <string name="datetime">dateTime</string>
@@ -515,8 +557,5 @@
 		]
 }
 	</string>
-    <string name="help">Help</string>
-    <string name="nav_settings">Settings</string>
-    <string name="nav_notif">Health Check Alert</string>
-    <string name="action_share">share</string>
+
 </resources>

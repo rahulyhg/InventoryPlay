@@ -8,7 +8,6 @@ import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.FileProvider;
@@ -22,14 +21,12 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
-import android.widget.ProgressBar;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.dell.inventoryplay.AppConfig;
-import com.dell.inventoryplay.DellApp;
+import com.dell.inventoryplay.InventoryPlayApp;
 import com.dell.inventoryplay.R;
 import com.dell.inventoryplay.base.BaseFragment;
 import com.dell.inventoryplay.main.MainActivity;
@@ -38,7 +35,6 @@ import com.dell.inventoryplay.request.HttpRequestObject;
 import com.dell.inventoryplay.request.RequestManager;
 import com.dell.inventoryplay.response.InquirySvcTagResponse;
 import com.dell.inventoryplay.utils.AppConstants;
-import com.dell.inventoryplay.utils.BottomNavigationViewHelper;
 import com.dell.inventoryplay.utils.Helper;
 import com.google.gson.Gson;
 
@@ -60,34 +56,24 @@ import static android.view.View.GONE;
  */
 
 public class CheckPointFragment extends BaseFragment {
-    ViewGroup rootView;
-    MainActivity activity;
-    BottomNavigationViewHelper bottomNavigationViewHelper;
-    BottomNavigationView bottomNavigationView;
-    String subTitle;
-    FrameLayout rowViewContainer, columnViewContainer;
-    ArrayList<ArrayList<String>> records;
-    //InquirySvcTagResponse response;
-    ArrayList<String> columns;
-    CheckPointTableRowLayout rowViewTable;
-    CheckPointTableColumnLayout columnViewTable;
-    FrameLayout loader, noInternet;
-    TextView msg, title;
-    String json, checkPointId, checkPointTitle;
-    RelativeLayout progressBarContainer;
-    ProgressBar progressBar;
-    private boolean showRowViewFew, showColViewFew;
-    FloatingActionButton switchView;
+    private ViewGroup rootView;
+    private MainActivity activity;
+    private FrameLayout rowViewContainer, columnViewContainer;
+    private ArrayList<ArrayList<String>> records;
+    private ArrayList<String> columns;
+    private CheckPointTableRowLayout rowViewTable;
+    private CheckPointTableColumnLayout columnViewTable;
+    private FrameLayout loader, noInternet;
+    private TextView msg;
+    private String checkPointId, checkPointTitle;
 
     @Override
     protected void setUp(View rootView) {
-        title = rootView.findViewById(R.id.title);
-        rowViewTable = new CheckPointTableRowLayout(CheckPointFragment.this, activity, columns, records);
+        TextView title = rootView.findViewById(R.id.title);
+        rowViewTable = new CheckPointTableRowLayout(activity, columns, records);
         rowViewContainer.addView(rowViewTable);
-        // loadBitmapFromView(rowViewTable);
-
         title.setText(checkPointTitle);
-        switchView = rootView.findViewById(R.id.switchView);
+        FloatingActionButton switchView = rootView.findViewById(R.id.switchView);
         switchView.setTag(1);
         switchView.setOnClickListener(view -> {
             int tag = (int) view.getTag();
@@ -98,9 +84,8 @@ public class CheckPointFragment extends BaseFragment {
                 rowViewContainer.setVisibility(View.VISIBLE);
                 if (rowViewTable == null) {
                     rowViewContainer.removeAllViews();
-                    rowViewTable = new CheckPointTableRowLayout(CheckPointFragment.this, activity, columns, records);
+                    rowViewTable = new CheckPointTableRowLayout(activity, columns, records);
                     rowViewContainer.addView(rowViewTable);
-                    // loadBitmapFromView(rowViewTable);
                 }
             } else {
                 view.setTag(0);
@@ -112,13 +97,11 @@ public class CheckPointFragment extends BaseFragment {
                     columnViewTable = new CheckPointTableColumnLayout(activity, columns, records);
                     columnViewTable.setGravity(Gravity.CENTER_HORIZONTAL);
                     columnViewContainer.addView(columnViewTable);
-                    //loadBitmapFromView(columnViewTable);
                 }
             }
 
 
         });
-        bottomNavigationView = activity.bottomNavigationView;
 
         loader.setVisibility(View.GONE);
     }
@@ -149,8 +132,11 @@ public class CheckPointFragment extends BaseFragment {
         msg = rootView.findViewById(R.id.msg);
         noInternet = rootView.findViewById(R.id.noInternet);
         Bundle b = getArguments();
-        checkPointId = b.getString("ID");
-        checkPointTitle = b.getString("TITLE");
+        if (b != null) {
+            checkPointId = b.getString("ID");
+            checkPointTitle = b.getString("TITLE");
+        }
+
         if (AppConfig.useMockJson) {
             String json = getString(R.string.api_check_point);
             Gson gson = new Gson();
@@ -169,7 +155,7 @@ public class CheckPointFragment extends BaseFragment {
                         noInternet.setVisibility(View.GONE);
                         loadData();
                     } else {
-                        Helper.getInstance(activity).showToast("No internet connection", 1, 3);
+                        Helper.getInstance(activity).showToast(getString(R.string.no_internet), 1, 3);
                     }
                 });
             }
@@ -187,7 +173,7 @@ public class CheckPointFragment extends BaseFragment {
         ActionBar actionBar = activity.getSupportActionBar();
         if (actionBar != null) {
             actionBar.setTitle(R.string.nav_home);
-            actionBar.setSubtitle("Health Check Alert");
+            actionBar.setSubtitle(getString(R.string.health_check_alert));
         }
 
     }
@@ -202,7 +188,7 @@ public class CheckPointFragment extends BaseFragment {
         try {
             HttpRequestObject reqObject = HttpRequestObject.getInstance();
             JSONObject jsonRequest = reqObject.getRequestBody(apiCode, inputData);
-            BaseGsonRequest<InquirySvcTagResponse> gsonRequest = new BaseGsonRequest<>(Request.Method.POST, url, InquirySvcTagResponse.class, jsonRequest, DellApp.getHeader(),
+            BaseGsonRequest<InquirySvcTagResponse> gsonRequest = new BaseGsonRequest<>(Request.Method.POST, url, InquirySvcTagResponse.class, jsonRequest, InventoryPlayApp.getHeader(),
                     res -> {
                         if (res.getSuccess() && res.getColumnList() != null) {
                             records = res.getValueList();
@@ -211,17 +197,17 @@ public class CheckPointFragment extends BaseFragment {
                             setUp(rootView);
                         } else if (res.getColumnList() == null) {
                             loader.setVisibility(View.GONE);
-                            msg.setText("No Alert Found.");
+                            msg.setText(R.string.no_alert_found);
                             noInternet.setVisibility(View.VISIBLE);
                         } else {
                             loader.setVisibility(View.GONE);
                             String msgStr = res.getMessage();
-                            msg.setText("" + msgStr);
+                            msg.setText(msgStr);
                             noInternet.setVisibility(View.VISIBLE);
                         }
                     }, error -> {
                 loader.setVisibility(View.GONE);
-                String msgStr = "Sorry, unable to process response now";
+                String msgStr = getString(R.string.unable_to_process);
                 msg.setText(msgStr);
                 noInternet.setVisibility(View.VISIBLE);
             });
@@ -243,13 +229,11 @@ public class CheckPointFragment extends BaseFragment {
 
 
     void doShare(String fileName) {
-        // prepareShare();
-        // String fileName;
 
         File dir = new File(activity.getFilesDir(), "images");
         File file = new File(dir, fileName);
         if (!file.exists()) {
-            Helper.getInstance(activity).showToast("Sorry,Unable to share report.", Toast.LENGTH_SHORT, 3);
+            Helper.getInstance(activity).showToast(getString(R.string.unable_to_share), Toast.LENGTH_SHORT, 3);
             return;
         }
         Uri uri = FileProvider.getUriForFile(activity, activity.getPackageName() + ".fileprovider", file);
@@ -258,15 +242,12 @@ public class CheckPointFragment extends BaseFragment {
         intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
         intent.setType("image/*");
         intent.putExtra(Intent.EXTRA_SUBJECT, checkPointTitle);
-        intent.putExtra(android.content.Intent.EXTRA_CC, new String[]{"Reddy_Chandrasekhar@Dell.com", "Raghavendra_Ganapath@Dell.com", "D_Gokulakrishnan@Dell.com", "Anuradha_Hariharasub@Dell.com", "Pardhasaradhi_Vajja@Dell.com", "Sabu_Philip@DellTeam.com"});
-
-        // intent.putExtra(Intent.EXTRA_EMAIL, new String[]{"sasikanta_sahoo@dellteam.com"});
         intent.putExtra(Intent.EXTRA_TEXT, checkPointTitle);
         intent.putExtra(Intent.EXTRA_STREAM, uri);
         try {
-            startActivity(Intent.createChooser(intent, "Share"));
+            startActivity(Intent.createChooser(intent, getString(R.string.share)));
         } catch (ActivityNotFoundException e) {
-            Toast.makeText(activity, "No App Available", Toast.LENGTH_SHORT).show();
+            Toast.makeText(activity, R.string.no_app_available, Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -306,38 +287,6 @@ public class CheckPointFragment extends BaseFragment {
 
     }
 
-    public void loadBitmapFromView(View v) {
-
-
-
-        /*
-        if (v != null && v.getHeight() > 0) {
-            v.measure(RelativeLayout.LayoutParams.WRAP_CONTENT, FrameLayout.LayoutParams.WRAP_CONTENT);
-            Bitmap b = Bitmap.createBitmap(v.getMeasuredWidth(), v.getMeasuredHeight(), Bitmap.Config.ARGB_8888);
-            Canvas c = new Canvas(b);
-            v.layout(0, 0, v.getMeasuredWidth(), v.getMeasuredHeight());
-            v.draw(c);
-
-            if (rowViewContainer.getVisibility() == View.VISIBLE) {
-                fileName = "checkpoint_row.png";
-            } else {
-                fileName = "checkpoint_column.png";
-            }
-            File dir = new File(activity.getFilesDir(), "images");
-            dir.mkdirs();
-            File file = new File(dir, fileName);
-            try {
-                FileOutputStream fOut = new FileOutputStream(file);
-                b.compress(Bitmap.CompressFormat.PNG, 100, fOut);
-                fOut.flush();
-                fOut.close();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }*/
-
-    }
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
@@ -345,13 +294,11 @@ public class CheckPointFragment extends BaseFragment {
         switch (id) {
             case R.id.action_share:
                 item.setEnabled(false);
-                //Helper.getInstance(activity).showToast("Opening Share Widget",Toast.LENGTH_LONG,4);
                 prepareShare();
                 item.setEnabled(true);
                 break;
             case R.id.action_help:
                 showHelp();
-
                 break;
         }
 

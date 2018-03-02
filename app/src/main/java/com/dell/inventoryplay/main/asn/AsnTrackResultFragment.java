@@ -5,7 +5,6 @@ import android.content.res.Configuration;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
-import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBar;
@@ -23,7 +22,6 @@ import com.dell.inventoryplay.base.BaseFragment;
 import com.dell.inventoryplay.main.MainActivity;
 import com.dell.inventoryplay.response.AsnAppDetailsResponse;
 import com.dell.inventoryplay.response.AsnResponse;
-import com.dell.inventoryplay.utils.BottomNavigationViewHelper;
 import com.dell.inventoryplay.utils.Helper;
 import com.google.gson.Gson;
 
@@ -36,16 +34,14 @@ import java.util.List;
  */
 
 public class AsnTrackResultFragment extends BaseFragment {
-    ViewGroup rootView;
-    MainActivity activity;
-    BottomNavigationViewHelper bottomNavigationViewHelper;
-    BottomNavigationView bottomNavigationView;
-    AsnResponse res;
-    String inputAsnId, inputSvcTag, inputTransType;
-    ExpandableListAdapter listAdapter;
-    ExpandableListView expListView;
-    List<AsnResponse.Records> listDataHeader;
-    ArrayMap<AsnResponse.Records, ArrayList<AsnAppDetailsResponse.Records>> listDataChild;
+    private ViewGroup rootView;
+    private MainActivity activity;
+    private AsnResponse res;
+    private String inputAsnId;
+    private String inputTransType;
+    private ExpandableListView expListView;
+    private List<AsnResponse.Records> listDataHeader;
+    private ArrayMap<AsnResponse.Records, ArrayList<AsnAppDetailsResponse.Records>> listDataChild;
 
     @Override
     public void onAttach(Context context) {
@@ -66,12 +62,8 @@ public class AsnTrackResultFragment extends BaseFragment {
 
         setRetainInstance(false);
 
-        bottomNavigationView = activity.bottomNavigationView;
-        bottomNavigationViewHelper = activity.bottomNavigationViewHelper;
-
         Bundle bundle = getArguments();
         inputAsnId = bundle != null ? bundle.getString("ASN_ID", "") : null;
-        inputSvcTag = bundle != null ? bundle.getString("SVC_TAG", "") : null;
         inputTransType = bundle != null ? bundle.getString("TRANS_TYPE", "") : null;
         res = (AsnResponse) (bundle != null ? bundle.getSerializable("RES") : null);
         setUp(rootView);
@@ -97,7 +89,7 @@ public class AsnTrackResultFragment extends BaseFragment {
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
         ArrayList<AsnResponse.HeaderInfo> headerInfo = res.getHeaderInfo();
-        if(headerInfo!=null) {
+        if (headerInfo != null) {
             LinearLayout headerContainer = rootView.findViewById(R.id.headerContainer);
             Helper.getInstance(activity).setHeaderInfo(headerContainer, headerInfo);
         }
@@ -111,10 +103,10 @@ public class AsnTrackResultFragment extends BaseFragment {
         TextView appListTitle = rootView.findViewById(R.id.appListTitle);
         Helper.getInstance(activity).createShape(headerTitle);
         Helper.getInstance(activity).createShape(appListTitle);
-        String title = inputTransType +" "+ getString(R.string.title_asn_track_header);
+        String title = inputTransType + " " + getString(R.string.title_asn_track_header);
         appListTitle.setText(title);
         prepareListData();
-        listAdapter = new AsnAppExpandableAdapter(activity, listDataHeader, listDataChild);
+        ExpandableListAdapter listAdapter = new AsnAppExpandableAdapter(activity, listDataHeader, listDataChild);
         expListView = rootView.findViewById(R.id.appList);
         expListView.setAdapter(listAdapter);
         expListView.setOnGroupClickListener((parent, v, groupPosition, id) -> {

@@ -7,7 +7,7 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="In progress"
+        android:text="@string/in_progress"
         android:textColor="@color/colorPrimary"
         android:textStyle="bold"
         android:gravity="center"

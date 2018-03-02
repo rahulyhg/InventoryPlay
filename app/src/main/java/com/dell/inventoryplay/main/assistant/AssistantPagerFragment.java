@@ -25,9 +25,8 @@ import com.dell.inventoryplay.main.RecyclerItemTouchHelper;
  */
 
 public class AssistantPagerFragment extends BaseFragment implements RecyclerItemTouchHelper.RecyclerItemTouchHelperListener {
-    public static final String ARG_POSITION = "ARG_POSITION";
-    ViewGroup rootView;
-    MainActivity mContext;
+
+    private MainActivity mContext;
 
     public static AssistantPagerFragment newInstance() {
         return new AssistantPagerFragment();
@@ -36,7 +35,7 @@ public class AssistantPagerFragment extends BaseFragment implements RecyclerItem
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        rootView = (ViewGroup) inflater.inflate(R.layout.fragment_assistant_page, container, false);
+        ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.fragment_assistant_page, container, false);
         setRetainInstance(true);
         setHasOptionsMenu(true);
         mContext = (MainActivity) getActivity();
@@ -75,7 +74,7 @@ public class AssistantPagerFragment extends BaseFragment implements RecyclerItem
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
 
-        if (MainActivity.currentPage != 3) {
+        if (MainActivity.sCurrentPage != 3) {
             menu.clear();
             inflater.inflate(R.menu.main, menu);
             search(menu);
@@ -85,7 +84,7 @@ public class AssistantPagerFragment extends BaseFragment implements RecyclerItem
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (MainActivity.currentPage != 3) {
+        if (MainActivity.sCurrentPage != 3) {
             int id = item.getItemId();
             switch (id) {
                 case R.id.search:

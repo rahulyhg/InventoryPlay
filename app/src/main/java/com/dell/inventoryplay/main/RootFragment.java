@@ -107,7 +107,7 @@ public class RootFragment extends BaseFragment {
 
 
                 if (activity.getSupportActionBar() != null) {
-                    activity.getSupportActionBar().setTitle(pageTitleArr[MainActivity.currentPage]);
+                    activity.getSupportActionBar().setTitle(pageTitleArr[MainActivity.sCurrentPage]);
                     activity.getSupportActionBar().setSubtitle("");
                 }
                 //  activity.turnOnToolbarScrolling();
@@ -127,9 +127,9 @@ public class RootFragment extends BaseFragment {
                 }
                 bottomNavigationView.getMenu().getItem(position).setChecked(true);
                 prevMenuItem = bottomNavigationView.getMenu().getItem(position);
-                MainActivity.currentPage = position;
+                MainActivity.sCurrentPage = position;
                 if (actionBar != null) {
-                    actionBar.setTitle(activity.getResources().getStringArray(R.array.page_title)[MainActivity.currentPage]);
+                    actionBar.setTitle(activity.getResources().getStringArray(R.array.page_title)[MainActivity.sCurrentPage]);
                     actionBar.setSubtitle("");
                 }
                 //   Fragment page = activity.getSupportFragmentManager().findFragmentByTag("android:switcher:" + R.id.pager + ":" + mPager.getCurrentItem());
@@ -175,11 +175,8 @@ public class RootFragment extends BaseFragment {
             return false;
         });
         if (mPref.isFirstTimeHelp()) {
-            mPref.setFirstTimeHelp(false);
-            new Handler().postDelayed(() -> {
-
-                showHelp();
-            }, 2000);
+            mPref.setFirstTimeHelp();
+            new Handler().postDelayed(this::showHelp, 2000);
         }
 
     }

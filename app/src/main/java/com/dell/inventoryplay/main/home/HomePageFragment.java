@@ -17,15 +17,12 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.android.volley.Request;
-import com.bumptech.glide.Glide;
 import com.dell.inventoryplay.AppConfig;
-import com.dell.inventoryplay.DellApp;
+import com.dell.inventoryplay.InventoryPlayApp;
 import com.dell.inventoryplay.R;
 import com.dell.inventoryplay.base.BaseFragment;
 import com.dell.inventoryplay.main.MainActivity;
@@ -36,7 +33,6 @@ import com.dell.inventoryplay.request.RequestManager;
 import com.dell.inventoryplay.response.CheckPointResponse;
 import com.dell.inventoryplay.utils.AppConstants;
 import com.dell.inventoryplay.utils.Helper;
-import com.dell.inventoryplay.utils.MovableFloatingActionButton;
 import com.google.gson.Gson;
 
 import org.json.JSONObject;
@@ -50,15 +46,13 @@ import io.reactivex.schedulers.Schedulers;
 
 /**
  * Created by sasikanta on 11/14/2017.
- * HomeStaticFragment
+ * HomePageFragment
  */
 
-public class HomeStaticFragment extends BaseFragment {
-    public static final String ARG_POSITION = "ARG_POSITION";
-    ViewGroup rootView;
-    MainActivity activity;
-    TextView alertHeader;
-    LinearLayout alertContainer;
+public class HomePageFragment extends BaseFragment {
+    private MainActivity activity;
+    private TextView alertHeader;
+    private LinearLayout alertContainer;
 
 
     @Override
@@ -67,14 +61,14 @@ public class HomeStaticFragment extends BaseFragment {
         activity = (MainActivity) context;
     }
 
-    public static HomeStaticFragment newInstance() {
-        return new HomeStaticFragment();
+    public static HomePageFragment newInstance() {
+        return new HomePageFragment();
     }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        rootView = (ViewGroup) inflater.inflate(
+        ViewGroup rootView = (ViewGroup) inflater.inflate(
                 R.layout.fragment_home_static, container, false);
         setRetainInstance(true);
         setHasOptionsMenu(true);
@@ -85,16 +79,11 @@ public class HomeStaticFragment extends BaseFragment {
 
     @Override
     protected void setUp(View rootView) {
-        ImageView gifImageView = rootView.findViewById(R.id.gif);
         TextView desc = rootView.findViewById(R.id.desc);
-        desc.setText(Html.fromHtml(getResources().getString(R.string.home_desc)));
-       /* Glide.with(activity)
-                .load(R.drawable.home_anim)
-                .into(gifImageView);
-                */
+        desc.setText(Html.fromHtml(getString(R.string.home_desc)));
         alertHeader = rootView.findViewById(R.id.alertHeader);
         alertHeader.setOnClickListener(view -> {
-            Helper.getInstance(activity).showToast("Please wait..", 1, 4);
+            Helper.getInstance(activity).showToast(getString(R.string.wait), 1, 4);
             alertHeader.setEnabled(false);
             alertHeader.setAlpha(0.3f);
             loadAlert();
@@ -121,7 +110,7 @@ public class HomeStaticFragment extends BaseFragment {
                     .subscribeOn(Schedulers.io())
                     .subscribe();
         } else {
-            addTextView("No internet connection");
+            addTextView(getString(R.string.no_internet));
         }
     }
 
@@ -134,7 +123,7 @@ public class HomeStaticFragment extends BaseFragment {
         try {
             HttpRequestObject reqObject = HttpRequestObject.getInstance();
             JSONObject jsonRequest = reqObject.getRequestBody(apiCode, inputData);
-            BaseGsonRequest<CheckPointResponse> gsonRequest = new BaseGsonRequest<>(Request.Method.POST, url, CheckPointResponse.class, jsonRequest, DellApp.getHeader(),
+            BaseGsonRequest<CheckPointResponse> gsonRequest = new BaseGsonRequest<>(Request.Method.POST, url, CheckPointResponse.class, jsonRequest, InventoryPlayApp.getHeader(),
                     res -> {
                         alertHeader.setEnabled(true);
                         alertHeader.setAlpha(1f);
@@ -157,8 +146,8 @@ public class HomeStaticFragment extends BaseFragment {
         if (titleList.size() > 0) {
             alertHeader.setTextColor(Color.RED);
         }
-        alertHeader.setText(titleList.size() + " alert(s) found.");
-
+        String alertCntTxt = titleList.size() + " alert(s) found.";
+        alertHeader.setText(alertCntTxt);
         Resources resources = getResources();
         Drawable drawable = resources.getDrawable(R.drawable.ic_navigate_next_black);
         int px = Helper.getInstance(activity).dpToPx(5);
@@ -197,7 +186,6 @@ public class HomeStaticFragment extends BaseFragment {
         TextView tv = new TextView(activity);
         tv.setText(msg);
         tv.setPadding(px, px, px, px);
-        // tv.setTypeface(Typeface.DEFAULT_BOLD);
         tv.setTextColor(getResources().getColor(R.color.colorPrimary));
         alertContainer.addView(tv);
     }
@@ -205,7 +193,7 @@ public class HomeStaticFragment extends BaseFragment {
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
 
-        if (MainActivity.currentPage == AppConstants.HOME) {
+        if (MainActivity.sCurrentPage == AppConstants.HOME) {
             menu.clear();
             inflater.inflate(R.menu.home, menu);
             super.onCreateOptionsMenu(menu, inflater);
@@ -215,15 +203,13 @@ public class HomeStaticFragment extends BaseFragment {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (MainActivity.currentPage == AppConstants.HOME) {
+        if (MainActivity.sCurrentPage == AppConstants.HOME) {
             int id = item.getItemId();
 
             switch (id) {
                 case R.id.action_help:
                     showHelp();
-                    // Helper.getInstance(activity).showToast("In progress", Toast.LENGTH_LONG, AppConstants.TOAST_SUCCESS);
                     break;
-
 
 
             }

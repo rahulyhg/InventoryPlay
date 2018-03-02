@@ -1,7 +1,5 @@
 package com.dell.inventoryplay.main.inquiry;
 
-import android.content.res.Resources;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -11,8 +9,6 @@ import android.support.v4.app.FragmentPagerAdapter;
 
 import com.dell.inventoryplay.R;
 
-import java.util.ArrayList;
-
 /**
  * Created by Sasikanta_Sahoo on 1/3/2018.
  * InquiryPagerAdapter
@@ -20,16 +16,12 @@ import java.util.ArrayList;
 
 class InquiryPagerAdapter extends FragmentPagerAdapter {
     private String[] pageTitle;
-    private ArrayList<Drawable> pageIcon;
 
     InquiryPagerAdapter(FragmentManager fm, FragmentActivity activity) {
         super(fm);
         pageTitle = activity.getResources().getStringArray(R.array.tab_scan_svc);
-        Resources res = activity.getResources();
-        pageIcon = new ArrayList<>();
-        pageIcon.add(res.getDrawable(R.drawable.ic_success));
-        pageIcon.add(res.getDrawable(R.drawable.ic_chart_marker));
-        pageIcon.add(res.getDrawable(R.drawable.ic_error));
+
+
     }
 
     @Override

@@ -25,33 +25,22 @@ import java.util.List;
 import io.reactivex.Single;
 import io.reactivex.SingleOnSubscribe;
 import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.schedulers.Schedulers;
 
 
 @SuppressLint("ViewConstructor")
 public class TableRowLayout extends RelativeLayout {
 
 
-    public TableLayout tableA;
-    public TableLayout tableB;
-    public TableLayout tableC;
-    public TableLayout tableD;
-
-    public HorizontalScrollView horizontalScrollViewB;
-    public HorizontalScrollView horizontalScrollViewD;
-
-    public ScrollView scrollViewC;
-    public ScrollView scrollViewD;
-    int posX = 0, posY = 0;
-    Context context;
+    public TableLayout tableA, tableB, tableC, tableD;
+    private HorizontalScrollView horizontalScrollViewB, horizontalScrollViewD;
+    private ScrollView scrollViewC, scrollViewD;
+    private int posX = 0, posY = 0;
+    private Context context;
     private ArrayList<String> columnList;
     private ArrayList<ArrayList<String>> valueList;
-
-    List<TableDataObject> tableDataObjects;
-
-
-    int headerCellsWidth[];
-    InquirySvcTagFragment inquirySvcTagFragment;
+    private List<TableDataObject> tableDataObjects;
+    private int headerCellsWidth[];
+    private InquirySvcTagFragment inquirySvcTagFragment;
 
     public TableRowLayout(InquirySvcTagFragment inquirySvcTagFragment, Context context, ArrayList<String> columnList, ArrayList<ArrayList<String>> valueList) {
 
@@ -65,40 +54,22 @@ public class TableRowLayout extends RelativeLayout {
         this.initComponents();
         this.setComponentsId();
         this.setScrollViewAndHorizontalScrollViewTag();
-
-
-        // no need to assemble component A, since it is just a table
         this.horizontalScrollViewB.addView(this.tableB);
-
         this.scrollViewC.addView(this.tableC);
-
         this.scrollViewD.addView(this.horizontalScrollViewD);
         this.horizontalScrollViewD.addView(this.tableD);
-
-        // add the components to be part of the main layout
         this.addComponentToMainLayout();
-        // this.setBackgroundColor(Color.RED);
-
-
-        // add some table rows
         this.addTableRowToTableA();
         this.addTableRowToTableB();
-
         this.resizeHeaderHeight();
-
         this.getTableRowHeaderCellWidth();
-
         this.generateTableC_AndTable_B();
-
         this.resizeBodyTableRowHeight();
     }
 
-    // this is just the sample data
     List<TableDataObject> tableDataObject() {
 
         List<TableDataObject> tableDataObject = new ArrayList<>();
-
-        // use max of 200/300 record. or else time out
         for (int x = 0; x < valueList.size(); x++) {
 
             TableDataObject rowObj = new TableDataObject(valueList.get(x));
@@ -110,15 +81,12 @@ public class TableRowLayout extends RelativeLayout {
 
     }
 
-    public void setScrollPos(int posX, int posY) {
+    public void setScrollPos(int posX) {
         this.scrollViewD.scrollTo(0, 0);
-        // this.scrollViewC.scrollTo(0, posY);
-        //this.horizontalScrollViewB.scrollTo(posX, 0);
         this.horizontalScrollViewD.scrollTo(posX, 0);
 
     }
 
-    // initalized components
     private void initComponents() {
 
         this.tableA = new TableLayout(this.context);
@@ -136,13 +104,8 @@ public class TableRowLayout extends RelativeLayout {
         scrollViewC.setHorizontalScrollBarEnabled(false);
         scrollViewD.setVerticalScrollBarEnabled(false);
         scrollViewD.setHorizontalScrollBarEnabled(false);
-
-        //  this.tableA.setBackgroundColor(Color.GREEN);
-        //   this.horizontalScrollViewB.setBackgroundColor(Color.LTGRAY);
-
     }
 
-    // set essential component IDs
     private void setComponentsId() {
         this.tableA.setId(R.id.inquiry_id1);
         this.horizontalScrollViewB.setId(R.id.inquiry_id2);
@@ -150,7 +113,6 @@ public class TableRowLayout extends RelativeLayout {
         this.scrollViewD.setId(R.id.inquiry_id4);
     }
 
-    // set tags for some horizontal and vertical scroll view
     private void setScrollViewAndHorizontalScrollViewTag() {
 
         this.horizontalScrollViewB.setTag("horizontal scroll view b");
@@ -160,23 +122,15 @@ public class TableRowLayout extends RelativeLayout {
         this.scrollViewD.setTag("scroll view d");
     }
 
-    // we add the components here in our TableMainLayout
     private void addComponentToMainLayout() {
-
-        // RelativeLayout params were very useful here
-        // the addRule method is the key to arrange the components properly
         RelativeLayout.LayoutParams componentB_Params = new RelativeLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
         componentB_Params.addRule(RelativeLayout.RIGHT_OF, this.tableA.getId());
-
         RelativeLayout.LayoutParams componentC_Params = new RelativeLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
         componentC_Params.addRule(RelativeLayout.BELOW, this.tableA.getId());
 
         RelativeLayout.LayoutParams componentD_Params = new RelativeLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
         componentD_Params.addRule(RelativeLayout.RIGHT_OF, this.scrollViewC.getId());
         componentD_Params.addRule(RelativeLayout.BELOW, this.horizontalScrollViewB.getId());
-
-        // 'this' is a relative layout,
-        // we extend this table layout as relative layout as seen during the creation of this class
         this.addView(this.tableA);
         this.addView(this.horizontalScrollViewB, componentB_Params);
         this.addView(this.scrollViewC, componentC_Params);
@@ -193,25 +147,21 @@ public class TableRowLayout extends RelativeLayout {
         this.tableB.addView(this.componentBTableRow());
     }
 
-    // generate table row of table A
     TableRow componentATableRow() {
 
         TableRow componentATableRow = new TableRow(this.context);
         TextView textView = this.headerTextView("SNo");
         int bgClr = context.getResources().getColor(R.color.colorPrimary);
         textView.setTypeface(Typeface.DEFAULT_BOLD);
-        //  textView.setBackgroundColor(context.getResources().getColor(R.color.colorPrimary));
         Helper.getInstance(context).createTableHeaderShape(textView);
 
         textView.setTextColor(bgClr);
         int px = Helper.getInstance(context).dpToPx(10);
         textView.setPadding(2 * px, px, 2 * px, px);
         componentATableRow.addView(textView);
-
         return componentATableRow;
     }
 
-    // generate table row of table B
     TableRow componentBTableRow() {
 
         TableRow componentBTableRow = new TableRow(this.context);
@@ -223,7 +173,6 @@ public class TableRowLayout extends RelativeLayout {
         for (int x = 0; x < headerFieldCount; x++) {
             TextView textView = this.headerTextView(this.columnList.get(x));
             textView.setLayoutParams(params);
-            //  textView.setBackgroundColor(bgClr);
             Helper.getInstance(context).createTableHeaderShape(textView);
             textView.setTextColor(bgClr);
             textView.setTypeface(Typeface.DEFAULT_BOLD);
@@ -239,13 +188,6 @@ public class TableRowLayout extends RelativeLayout {
             Drawable transparentDrawable = new ColorDrawable(Color.TRANSPARENT);
             transparentDrawable.setBounds(0, 0, w, h);
             textView.setCompoundDrawables(transparentDrawable, null, null, null);
-
-            //   textView.setCompoundDrawablesWithIntrinsicBounds(android.R.drawable.btn_radio, 0, 0, 0);
-
-
-         /*   if (x == Integer.parseInt(index))
-                textView.setTag(sortType + "-" + index);
-            else*/
             textView.setTag("0" + "-" + x);
             textView.setOnClickListener(view -> {
                 inquirySvcTagFragment.showProgressBar();
@@ -255,8 +197,6 @@ public class TableRowLayout extends RelativeLayout {
                         .subscribe(o -> updateView());
 
 
-
-
             });
 
             componentBTableRow.addView(textView);
@@ -264,28 +204,29 @@ public class TableRowLayout extends RelativeLayout {
 
         return componentBTableRow;
     }
-    public void updateView(){
+
+    public void updateView() {
         inquirySvcTagFragment.hideProgressBar();
     }
-public  void doInBg(View view){
-    String tag = (String) view.getTag();
-    resetDrawable(view);
-    String[] arr = tag.split("-");
-    String sortType = arr[0];
-    String index = arr[1];
-    if (sortType.contains("2")) {
-        ((TextView) view).setCompoundDrawablesWithIntrinsicBounds(android.R.drawable.arrow_up_float, 0, 0, 0);
 
-        String myTag = "1" + "-" + index;
-        view.setTag(myTag);
-    } else {
-        ((TextView) view).setCompoundDrawablesWithIntrinsicBounds(android.R.drawable.arrow_down_float, 0, 0, 0);
-        String myTag = "2" + "-" + index;
-        view.setTag(myTag);
-
+    public void doInBg(View view) {
+        String tag = (String) view.getTag();
+        resetDrawable(view);
+        String[] arr = tag.split("-");
+        String sortType = arr[0];
+        String index = arr[1];
+        if (sortType.contains("2")) {
+            ((TextView) view).setCompoundDrawablesWithIntrinsicBounds(android.R.drawable.arrow_up_float, 0, 0, 0);
+            String myTag = "1" + "-" + index;
+            view.setTag(myTag);
+        } else {
+            ((TextView) view).setCompoundDrawablesWithIntrinsicBounds(android.R.drawable.arrow_down_float, 0, 0, 0);
+            String myTag = "2" + "-" + index;
+            view.setTag(myTag);
+        }
+        inquirySvcTagFragment.sortCol(sortType, index, posX, posY);
     }
-    inquirySvcTagFragment.sortCol(sortType, index, posX, posY);
-}
+
     public void resetDrawable(View view) {
         ViewGroup vg = (ViewGroup) view.getParent();
         int cnt = vg.getChildCount();
@@ -294,18 +235,11 @@ public  void doInBg(View view){
         int w = image.getIntrinsicWidth();
 
         for (int i = 0; i < cnt; i++) {
-
             TextView textView = (TextView) vg.getChildAt(i);
             Drawable transparentDrawable = new ColorDrawable(Color.TRANSPARENT);
             transparentDrawable.setBounds(0, 0, w, h);
             textView.setCompoundDrawables(transparentDrawable, null, null, null);
-
-            // textView.setCompoundDrawablesWithIntrinsicBounds(android.R.drawable.btn_radio, 0, 0, 0);
-
-
         }
-
-
     }
 
     public void regenerateTableD(ArrayList<ArrayList<String>> valueList) {
@@ -335,13 +269,7 @@ public  void doInBg(View view){
 
     }
 
-    // generate table row of table C and table D
     private void generateTableC_AndTable_B() {
-
-        // just seeing some header cell width
-      /*  for (int x = 0; x < this.headerCellsWidth.length; x++) {
-            Log.v("TableMainLayout.java", this.headerCellsWidth[x] + "");
-        }*/
         int slNo = 1;
         for (TableDataObject sampleObject : this.tableDataObjects) {
 
@@ -357,7 +285,6 @@ public  void doInBg(View view){
         }
     }
 
-    // a TableRow for table C
     TableRow tableRowForTableC(int slNo) {
 
         TableRow.LayoutParams params = new TableRow.LayoutParams(this.headerCellsWidth[0], LayoutParams.MATCH_PARENT);
@@ -396,7 +323,6 @@ public  void doInBg(View view){
         TableRow taleRowForTableD = new TableRow(this.context);
         int loopCount = ((TableRow) this.tableB.getChildAt(0)).getChildCount();
         ArrayList<String> myList = sampleObject.valueList;
-        //  String info[] =  sampleObject.valueList.get(0);
         String info[] = myList.toArray(new String[0]);
 
         for (int x = 0; x < loopCount; x++) {
@@ -433,7 +359,6 @@ public  void doInBg(View view){
         return taleRowForTableD;
     }
 
-    // table cell standard TextView
     TextView bodyTextView(String label) {
 
         TextView bodyTextView = new TextView(this.context);
@@ -446,7 +371,6 @@ public  void doInBg(View view){
         return bodyTextView;
     }
 
-    // header standard TextView
     TextView headerTextView(String label) {
 
         TextView headerTextView = new TextView(this.context);
@@ -455,11 +379,9 @@ public  void doInBg(View view){
         headerTextView.setGravity(Gravity.CENTER);
         int px = Helper.getInstance(context).dpToPx(10);
         headerTextView.setPadding(px, px, px, px);
-        //  headerTextView.setPadding(5, 5, 5, 5);
         return headerTextView;
     }
 
-    // resizing TableRow height starts here
     void resizeHeaderHeight() {
 
         TableRow productNameHeaderTableRow = (TableRow) this.tableA.getChildAt(0);
@@ -491,7 +413,6 @@ public  void doInBg(View view){
         }
     }
 
-    // resize body table row height
     void resizeBodyTableRowHeight() {
 
         int tableC_ChildCount = this.tableC.getChildCount();
@@ -512,13 +433,9 @@ public  void doInBg(View view){
 
     }
 
-    // match all height in a table row
-    // to make a standard TableRow height
     private void matchLayoutHeight(TableRow tableRow, int height) {
 
         int tableRowChildCount = tableRow.getChildCount();
-
-        // if a TableRow has only 1 child
         if (tableRow.getChildCount() == 1) {
 
             View view = tableRow.getChildAt(0);
@@ -527,8 +444,6 @@ public  void doInBg(View view){
 
             return;
         }
-
-        // if a TableRow has more than 1 child
         for (int x = 0; x < tableRowChildCount; x++) {
 
             View view = tableRow.getChildAt(x);
@@ -543,7 +458,6 @@ public  void doInBg(View view){
 
     }
 
-    // check if the view has the highest height in a TableRow
     private boolean isTheHeighestLayout(TableRow tableRow, int layoutPosition) {
 
         int tableRowChildCount = tableRow.getChildCount();
@@ -563,19 +477,16 @@ public  void doInBg(View view){
         return heighestViewPosition == layoutPosition;
     }
 
-    // read a view's height
     private int viewHeight(View view) {
         view.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED);
         return view.getMeasuredHeight();
     }
 
-    // read a view's width
     private int viewWidth(View view) {
         view.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED);
         return view.getMeasuredWidth();
     }
 
-    // horizontal scroll view custom class
     class MyHorizontalScrollView extends HorizontalScrollView {
 
         public MyHorizontalScrollView(Context context) {
@@ -595,7 +506,6 @@ public  void doInBg(View view){
 
     }
 
-    // scroll view custom class
     class MyScrollView extends ScrollView {
 
         public MyScrollView(Context context) {

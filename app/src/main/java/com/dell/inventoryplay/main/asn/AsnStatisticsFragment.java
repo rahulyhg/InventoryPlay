@@ -3,7 +3,6 @@ package com.dell.inventoryplay.main.asn;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -28,10 +27,10 @@ import java.util.ArrayList;
 public class AsnStatisticsFragment extends Fragment {
 
     public static String ARG_POSITION;
-    ViewGroup rootView;
-    ArrayList<ChartTableResponse.Chart> chartList;
-    RecyclerView recyclerView;
-    MainActivity activity;
+    private ViewGroup rootView;
+    private ArrayList<ChartTableResponse.Chart> chartList;
+    private RecyclerView recyclerView;
+    private MainActivity activity;
 
     @Override
     public void onAttach(Context context) {

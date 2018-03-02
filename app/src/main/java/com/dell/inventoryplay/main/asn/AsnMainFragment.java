@@ -97,7 +97,7 @@ public class AsnMainFragment extends BaseFragment {
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
 
-        if (MainActivity.currentPage == AppConstants.ASN) {
+        if (MainActivity.sCurrentPage == AppConstants.ASN) {
             menu.clear();
             inflater.inflate(R.menu.home, menu);
             super.onCreateOptionsMenu(menu, inflater);
@@ -107,7 +107,7 @@ public class AsnMainFragment extends BaseFragment {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (MainActivity.currentPage == AppConstants.ASN) {
+        if (MainActivity.sCurrentPage == AppConstants.ASN) {
             int id = item.getItemId();
 
             switch (id) {
@@ -137,7 +137,7 @@ public class AsnMainFragment extends BaseFragment {
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
                 ActionBar actionBar = activity.getSupportActionBar();
                 if (actionBar != null) {
-                    actionBar.setTitle(activity.getResources().getStringArray(R.array.page_title)[MainActivity.currentPage]);
+                    actionBar.setTitle(activity.getResources().getStringArray(R.array.page_title)[MainActivity.sCurrentPage]);
                     actionBar.setSubtitle("");
                 }
 
@@ -149,7 +149,7 @@ public class AsnMainFragment extends BaseFragment {
 
                 ActionBar actionBar = activity.getSupportActionBar();
                 if (actionBar != null) {
-                    actionBar.setTitle(activity.getResources().getStringArray(R.array.page_title)[MainActivity.currentPage]);
+                    actionBar.setTitle(activity.getResources().getStringArray(R.array.page_title)[MainActivity.sCurrentPage]);
                     actionBar.setSubtitle("");
                 }
 

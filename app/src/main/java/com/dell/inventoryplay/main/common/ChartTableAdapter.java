@@ -267,7 +267,7 @@ public class ChartTableAdapter extends RecyclerView.Adapter<ChartTableAdapter.Cu
 
             float groupSpace = 0.0f;
             float barSpace = 0.1f;
-            barChart.setData(chart.setUp(mContext, name, axis1, axis2, values, showList));
+            barChart.setData(chart.setUp(mContext, axis2, values, showList));
             barChart.groupBars(0f, groupSpace, barSpace);
             barChart.getDescription().setEnabled(false);
             CustomMarkerView marker = new CustomMarkerView(mContext, R.layout.custom_marker_view);
@@ -300,7 +300,7 @@ public class ChartTableAdapter extends RecyclerView.Adapter<ChartTableAdapter.Cu
 
 
             AppChart chart = AppChart.newInstance();
-            pieChart.setData(chart.setUp(mContext, name, axis1, axis2, values));
+            pieChart.setData(chart.setUp(mContext, axis1, values));
             Legend cLegend = pieChart.getLegend();
             cLegend.setEnabled(false);
             int entryLabelColor = mContext.getResources().getColor(R.color.headerTextLight);

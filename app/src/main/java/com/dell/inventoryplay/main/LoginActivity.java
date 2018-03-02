@@ -18,7 +18,7 @@ import android.widget.TextView;
 
 import com.android.volley.Request;
 import com.dell.inventoryplay.AppConfig;
-import com.dell.inventoryplay.DellApp;
+import com.dell.inventoryplay.InventoryPlayApp;
 import com.dell.inventoryplay.R;
 import com.dell.inventoryplay.request.BaseGsonRequest;
 import com.dell.inventoryplay.request.HttpRequestObject;
@@ -29,8 +29,6 @@ import com.dell.inventoryplay.utils.Helper;
 import com.dell.inventoryplay.utils.PrefManager;
 
 import org.json.JSONObject;
-
-import java.util.Calendar;
 
 import io.reactivex.Single;
 import io.reactivex.SingleOnSubscribe;
@@ -43,12 +41,11 @@ import io.reactivex.schedulers.Schedulers;
  */
 
 public class LoginActivity extends AppCompatActivity {
-    EditText userName, password;
-    FrameLayout loader;
-    TextView remember;
-    String userNameStr, passwordStr;
-    CheckBox mock;
-    PrefManager mPref;
+    private EditText userName, password;
+    private FrameLayout loader;
+    private String userNameStr, passwordStr;
+    private CheckBox mock;
+    private PrefManager mPref;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -61,7 +58,7 @@ public class LoginActivity extends AppCompatActivity {
         Button submit = findViewById(R.id.submit);
         userName = findViewById(R.id.userName);
         password = findViewById(R.id.password);
-        remember = findViewById(R.id.remember);
+        TextView remember = findViewById(R.id.remember);
         loader = findViewById(R.id.loader);
         mock = findViewById(R.id.mock);
         userName.setOnEditorActionListener(generalEditorAction);
@@ -102,12 +99,6 @@ public class LoginActivity extends AppCompatActivity {
 
     private void performSearch() {
 
-        Calendar cal = Calendar.getInstance();
-        int MONTH = cal.get(Calendar.MONTH);
-        int YEAR = cal.get(Calendar.YEAR);
-        int DAY_OF_MONTH = cal.get(Calendar.DAY_OF_MONTH);
-
-
         hideKeyboard();
         userNameStr = userName.getText().toString().trim();
         passwordStr = password.getText().toString().trim();
@@ -145,53 +136,23 @@ public class LoginActivity extends AppCompatActivity {
         try {
             HttpRequestObject reqObject = HttpRequestObject.getInstance();
             JSONObject jsonRequest = reqObject.getRequestBody(apiCode, inputData);
-            BaseGsonRequest<LoginResponse> gsonRequest = new BaseGsonRequest<>(Request.Method.POST, url, LoginResponse.class, jsonRequest, DellApp.getHeader(),
+            BaseGsonRequest<LoginResponse> gsonRequest = new BaseGsonRequest<>(Request.Method.POST, url, LoginResponse.class, jsonRequest, InventoryPlayApp.getHeader(),
                     res -> {
                         if (res.getSuccess() && res.getValidUser()) {
                             setUp();
                         } else if (res.getSuccess() && !res.getValidUser()) {
                             loader.setVisibility(View.GONE);
-                            String msgStr = "Sorry, Invalid user";
-                            Helper.getInstance(this).showToast("Invalid credential.", 1, 3);
+                            Helper.getInstance(this).showToast(getString(R.string.invalid_credential), 1, 3);
                         } else {
                             loader.setVisibility(View.GONE);
-                            String msgStr = res.getMessage();
                         }
                     }, error -> {
                 loader.setVisibility(View.GONE);
-                String msgStr = "Sorry, unable to process response now";
-                //  msg.setText(msgStr);
+                String msgStr = getString(R.string.unable_to_process);
                 Helper.getInstance(this).showToast(msgStr, 1, 3);
             });
             RequestManager.getRequestQueue().add(gsonRequest).setTag(AppConstants.LOGIN_TAG);
 
-
-
-
-           /* HttpRequestObject reqObject = HttpRequestObject.getInstance();
-            JSONObject jsonRequest = reqObject.getRequestBody(apiCode, inputData);
-
-
-
-
-            LoginGsonRequest gsonRequest = new LoginGsonRequest(Request.Method.POST, url, jsonRequest, res -> {
-                if (((LoginResponse) res).getSuccess() && ((LoginResponse) res).getValidUser()) {
-                    setUp();
-                } else {
-                    loader.setVisibility(View.GONE);
-                    String msgStr = ((LoginResponse) res).getMessage();
-                    msg.setText("" + msgStr);
-                    noInternet.setVisibility(View.VISIBLE);
-                }
-            }, error -> {
-                loader.setVisibility(View.GONE);
-                String msgStr = "Sorry, unable to process response now";
-                msg.setText(msgStr);
-                AppLogger.e("ERRORRR:" + error.getMessage());
-                noInternet.setVisibility(View.VISIBLE);
-            }, LoginResponse.class, DellApp.getHeader());
-            RequestManager.getRequestQueue().add(gsonRequest).setTag(AppConstants.LOGIN_TAG);
-            */
         } catch (Exception e) {
             e.printStackTrace();
         }

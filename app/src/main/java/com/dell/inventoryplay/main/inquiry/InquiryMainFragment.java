@@ -24,15 +24,12 @@ import com.dell.inventoryplay.utils.Helper;
 
 /**
  * Created by sasikanta on 11/14/2017.
- * SvcPagerFragment
+ * InquiryMainFragment
  */
 
 public class InquiryMainFragment extends BaseFragment {
-    public static final String ARG_POSITION = "ARG_POSITION";
-
-    ViewGroup rootView;
-    MainActivity activity;
-    ViewPager tabViewPager;
+    private MainActivity activity;
+    private ViewPager tabViewPager;
 
     public static InquiryMainFragment newInstance() {
         return new InquiryMainFragment();
@@ -56,7 +53,7 @@ public class InquiryMainFragment extends BaseFragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        rootView = (ViewGroup) inflater.inflate(
+        ViewGroup rootView = (ViewGroup) inflater.inflate(
                 R.layout.fragment_inquiry_page, container, false);
         setRetainInstance(true);
         setHasOptionsMenu(true);
@@ -69,7 +66,7 @@ public class InquiryMainFragment extends BaseFragment {
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
 
-        if (MainActivity.currentPage == AppConstants.INQUIRY) {
+        if (MainActivity.sCurrentPage == AppConstants.INQUIRY) {
             menu.clear();
             inflater.inflate(R.menu.home, menu);
             super.onCreateOptionsMenu(menu, inflater);
@@ -79,7 +76,7 @@ public class InquiryMainFragment extends BaseFragment {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (MainActivity.currentPage == AppConstants.INQUIRY) {
+        if (MainActivity.sCurrentPage == AppConstants.INQUIRY) {
             int id = item.getItemId();
 
             switch (id) {

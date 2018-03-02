@@ -5,25 +5,26 @@
     android:id="@+id/constraintLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
-    >
+    android:background="@color/white">
+
     <TextView
         android:id="@+id/title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textStyle="bold"
-        android:text="ODM ASN ACK and SN ACK Pending >15 minutes"
-        android:padding="2dp"
-        android:textColor="@color/colorPrimary"
         android:gravity="center"
-        />
+        android:padding="2dp"
+        android:text="@string/app_name"
+        android:textColor="@color/colorPrimary"
+        android:textStyle="bold" />
+
     <FrameLayout
-        app:layout_constraintTop_toBottomOf="@+id/title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/table_border"
         android:clickable="true"
-        android:focusable="true">
+        android:focusable="true"
+        app:layout_constraintTop_toBottomOf="@+id/title">
+
         <FrameLayout
             android:id="@+id/rowViewContainer"
             android:layout_width="match_parent"
@@ -38,8 +39,7 @@
             android:layout_height="match_parent"
             android:layout_gravity="center_horizontal"
             android:background="@color/white"
-            android:orientation="vertical"
-            />
+            android:orientation="vertical" />
 
         <com.dell.inventoryplay.utils.MovableFloatingActionButton
             android:id="@+id/switchView"
@@ -49,9 +49,9 @@
             android:src="@drawable/ic_view_column"
             android:tint="@color/white"
 
-            app:layout_scrollFlags="scroll|enterAlways"
-            />
+            app:layout_scrollFlags="scroll|enterAlways" />
     </FrameLayout>
+
     <FrameLayout
         android:id="@+id/loader"
         android:layout_width="match_parent"
@@ -66,7 +66,8 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center">
+            android:layout_gravity="center"
+            tools:ignore="UselessParent">
 
             <ProgressBar
                 android:id="@+id/progress"
@@ -88,7 +89,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/progress"
                 android:gravity="center"
-                android:text="Loading.."
+                android:text="@string/loading"
                 android:textColor="@color/colorPrimary" />
         </RelativeLayout>
 
@@ -113,7 +114,7 @@
             android:layout_gravity="center"
             android:drawableStart="@drawable/ic_internet"
             android:gravity="center"
-            android:text="Connect internet &amp; tap here"
+            android:text="@string/connect_internet_amp_tap_here"
             android:textColor="@color/colorPrimary"
             app:layout_constraintBottom_toBottomOf="@+id/constraintLayout"
             app:layout_constraintEnd_toEndOf="@+id/constraintLayout"

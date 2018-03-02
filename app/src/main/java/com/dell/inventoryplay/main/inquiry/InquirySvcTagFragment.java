@@ -4,7 +4,6 @@ import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
-import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBar;
@@ -13,7 +12,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
-import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -21,7 +19,6 @@ import com.dell.inventoryplay.R;
 import com.dell.inventoryplay.base.BaseFragment;
 import com.dell.inventoryplay.main.MainActivity;
 import com.dell.inventoryplay.response.InquirySvcTagResponse;
-import com.dell.inventoryplay.utils.BottomNavigationViewHelper;
 import com.dell.inventoryplay.utils.Helper;
 import com.google.gson.Gson;
 
@@ -36,23 +33,16 @@ import static android.view.View.GONE;
  */
 
 public class InquirySvcTagFragment extends BaseFragment {
-    ViewGroup rootView;
-    MainActivity activity;
-    BottomNavigationViewHelper bottomNavigationViewHelper;
-    BottomNavigationView bottomNavigationView;
-    String inputSvcTag, inputItem, inputLocation, inputRegion, subTitle;
-    FrameLayout rowViewContainer, columnViewContainer;
-    ArrayList<ArrayList<String>> records;
-    //InquirySvcTagResponse response;
-    ArrayList<String> columns;
-    TableRowLayout rowViewTable;
-    TableColumnLayout columnViewTable;
-    String param1 = "";
-    String param2;
-    int inputTabNo;
-    String json;
-    RelativeLayout progressBarContainer;
-    ProgressBar progressBar;
+    private MainActivity activity;
+    private String subTitle;
+    private FrameLayout rowViewContainer, columnViewContainer;
+    private ArrayList<ArrayList<String>> records;
+    private ArrayList<String> columns;
+    private TableRowLayout rowViewTable;
+    private TableColumnLayout columnViewTable;
+    private String param1;
+    private String json;
+    private RelativeLayout progressBarContainer;
     private boolean showRowViewFew, showColViewFew;
 
     @Override
@@ -74,7 +64,7 @@ public class InquirySvcTagFragment extends BaseFragment {
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        rootView = (ViewGroup) inflater.inflate(
+        ViewGroup rootView = (ViewGroup) inflater.inflate(
                 R.layout.fragment_inquiry_svc_tag, container, false);
         rowViewContainer = rootView.findViewById(R.id.rowViewContainer);
         columnViewContainer = rootView.findViewById(R.id.columnViewContainer);
@@ -84,9 +74,6 @@ public class InquirySvcTagFragment extends BaseFragment {
         TextView reg = rootView.findViewById(R.id.reg);
         TextView dynParam = rootView.findViewById(R.id.dynParam);
         progressBarContainer = rootView.findViewById(R.id.progressBarContainer);
-        progressBar = rootView.findViewById(R.id.progressBar);
-        //  progressBar.setIndeterminateDrawable(new FoldingCirclesDrawable.Builder(activity)
-        //        .build());
         FloatingActionButton switchView = rootView.findViewById(R.id.switchView);
         switchView.setTag(1);
         switchView.setOnClickListener(view -> {
@@ -212,7 +199,6 @@ public class InquirySvcTagFragment extends BaseFragment {
                 } else {
                     showColViewFew = false;
                     for (int i = 0; i < cnt; i++) {
-                        // int tag = (int) ((ViewGroup) columnViewTable.tableC.getChildAt(i)).getChildAt(0).getTag();
                         (columnViewTable.tableC.getChildAt(i)).setVisibility(View.VISIBLE);
                         (columnViewTable.tableD.getChildAt(i)).setVisibility(View.VISIBLE);
                     }
@@ -220,38 +206,30 @@ public class InquirySvcTagFragment extends BaseFragment {
             }
 
         });
-        // Helper.getInstance(activity).createShape(headerContainer);
-        // Helper.getInstance(activity).createShape(svcTag);
-        // Helper.getInstance(activity).createShape(reg);
-//https://www.androidcode.ninja/android-scroll-table-fixed-header-column/
-        //http://justsimpleinfo.blogspot.in/2015/04/android-scrolling-table-with-fixed.html
-        bottomNavigationView = activity.bottomNavigationView;
-        //  bottomNavigationViewHelper = activity.bottomNavigationViewHelper;
 
         Bundle bundle = getArguments();
 
 
-        inputRegion = bundle != null ? bundle.getString("PARAM2", "") : "";
-        param2 = inputRegion;
+        String param2 = bundle != null ? bundle.getString("PARAM2", "") : "";
         reg.setText(param2);
-        inputTabNo = bundle != null ? bundle.getInt("TAB_NO", 0) : 0;
+        int inputTabNo = bundle != null ? bundle.getInt("TAB_NO", 0) : 0;
 
         switch (inputTabNo) {
             case 0:
-                inputSvcTag = bundle != null ? bundle.getString("PARAM1", "") : null;
+                String inputSvcTag = bundle != null ? bundle.getString("PARAM1", "") : null;
                 subTitle = activity.getResources().getString(R.string.title_sub_inquiry_svc_tag);
                 param1 = inputSvcTag;
 
                 json = activity.getString(R.string.api_inquiry_service_tag);
                 break;
             case 1:
-                inputItem = bundle.getString("PARAM1", "");
+                String inputItem = bundle.getString("PARAM1", "");
                 subTitle = activity.getResources().getString(R.string.title_sub_inquiry_item);
                 param1 = inputItem;
                 json = activity.getString(R.string.api_inquiry_item);
                 break;
             case 2:
-                inputLocation = bundle.getString("PARAM1", "");
+                String inputLocation = bundle.getString("PARAM1", "");
                 subTitle = activity.getResources().getString(R.string.title_sub_inquiry_location);
                 param1 = inputLocation;
                 json = activity.getString(R.string.api_inquiry_location);
@@ -260,7 +238,6 @@ public class InquirySvcTagFragment extends BaseFragment {
         String dynParamText = subTitle + ":";
         svcTag.setText(param1);
         dynParam.setText(dynParamText);
-        //   res = (AsnResponse) (bundle != null ? bundle.getSerializable("RES") : null);
         loadData();
         return rootView;
     }
@@ -302,7 +279,7 @@ public class InquirySvcTagFragment extends BaseFragment {
         rowViewTable.regenerateTableD(records);
         Handler h = new Handler();
         h.postDelayed(() -> {
-            rowViewTable.setScrollPos(posX, posY);
+            rowViewTable.setScrollPos(posX);
             hideProgressBar();
         }, 100);
 

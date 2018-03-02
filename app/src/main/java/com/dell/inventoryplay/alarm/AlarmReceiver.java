@@ -18,7 +18,7 @@ import android.support.v4.content.WakefulBroadcastReceiver;
 
 import com.android.volley.Request;
 import com.dell.inventoryplay.AppConfig;
-import com.dell.inventoryplay.DellApp;
+import com.dell.inventoryplay.InventoryPlayApp;
 import com.dell.inventoryplay.R;
 import com.dell.inventoryplay.main.LoginActivity;
 import com.dell.inventoryplay.request.BaseGsonRequest;
@@ -35,9 +35,10 @@ import java.util.ArrayList;
 import static android.content.Context.NOTIFICATION_SERVICE;
 
 
+/*
+Remove this class once Push notification implemented
+*/
 public class AlarmReceiver extends WakefulBroadcastReceiver {
-    private AlarmManager alarmMgr;
-    private PendingIntent alarmIntent;
     private Context mContext;
     final private int notificationId = 10000;
 
@@ -63,21 +64,23 @@ public class AlarmReceiver extends WakefulBroadcastReceiver {
     public void sendNotification(String title) {
 
         NotificationManager mNotifyMgr = (NotificationManager) mContext.getSystemService(NOTIFICATION_SERVICE);
-        NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(mContext, getChannelId());
-        Intent notificationIntent1 = new Intent(mContext, LoginActivity.class);
-        notificationIntent1.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-        PendingIntent intent1 = PendingIntent.getActivity(mContext, 55, notificationIntent1,
-                PendingIntent.FLAG_CANCEL_CURRENT);
-        mBuilder.setSmallIcon(R.drawable.ic_launcher);
-        mBuilder.setContentTitle("Inventory Play Alert");
-        mBuilder.setContentText(title);
-        mBuilder.setPriority(Notification.PRIORITY_MAX);
-        mBuilder.setAutoCancel(true);
-        mBuilder.setContentIntent(intent1);
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
-            notifChannel(mNotifyMgr);
+        if (mNotifyMgr != null) {
+            NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(mContext, getChannelId());
+            Intent notificationIntent1 = new Intent(mContext, LoginActivity.class);
+            notificationIntent1.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+            PendingIntent intent1 = PendingIntent.getActivity(mContext, 55, notificationIntent1,
+                    PendingIntent.FLAG_CANCEL_CURRENT);
+            mBuilder.setSmallIcon(R.drawable.ic_launcher);
+            mBuilder.setContentTitle("Inventory Play Alert");
+            mBuilder.setContentText(title);
+            mBuilder.setPriority(Notification.PRIORITY_MAX);
+            mBuilder.setAutoCancel(true);
+            mBuilder.setContentIntent(intent1);
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+                notifChannel(mNotifyMgr);
+            }
+            mNotifyMgr.notify(notificationId, mBuilder.build());
         }
-        mNotifyMgr.notify(notificationId, mBuilder.build());
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
@@ -100,27 +103,19 @@ public class AlarmReceiver extends WakefulBroadcastReceiver {
 
     public void setAlarm(Context mContext) {
         Intent intent = new Intent(mContext, AlarmReceiver.class);
-        //  intent.putExtra("TYPE", type);
-        alarmIntent = PendingIntent.getBroadcast(mContext, 1000, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+        PendingIntent alarmIntent = PendingIntent.getBroadcast(mContext, 1000, intent, PendingIntent.FLAG_UPDATE_CURRENT);
 
-        alarmMgr = (AlarmManager) mContext.getSystemService(Context.ALARM_SERVICE);
-        alarmMgr.setInexactRepeating(AlarmManager.ELAPSED_REALTIME_WAKEUP,
-                SystemClock.elapsedRealtime() + AlarmManager.INTERVAL_FIFTEEN_MINUTES,
-                AlarmManager.INTERVAL_FIFTEEN_MINUTES, alarmIntent);
+        AlarmManager alarmMgr = (AlarmManager) mContext.getSystemService(Context.ALARM_SERVICE);
+        if (alarmMgr != null) {
+            alarmMgr.setInexactRepeating(AlarmManager.ELAPSED_REALTIME_WAKEUP,
+                    SystemClock.elapsedRealtime() + AlarmManager.INTERVAL_FIFTEEN_MINUTES,
+                    AlarmManager.INTERVAL_FIFTEEN_MINUTES, alarmIntent);
+        }
 
         ComponentName receiver = new ComponentName(mContext, BootReceiver.class);
         PackageManager pm = mContext.getPackageManager();
         pm.setComponentEnabledSetting(receiver, PackageManager.COMPONENT_ENABLED_STATE_ENABLED, PackageManager.DONT_KILL_APP);
 
-
-    }
-
-    public void cancelNewsAlarm(Context context, int type) {
-        alarmMgr = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
-        Intent intent = new Intent(context, AlarmReceiver.class);
-        intent.putExtra("TYPE", type);
-        alarmIntent = PendingIntent.getBroadcast(context, type, intent, PendingIntent.FLAG_UPDATE_CURRENT);
-        alarmMgr.cancel(alarmIntent);
 
     }
 
@@ -133,15 +128,15 @@ public class AlarmReceiver extends WakefulBroadcastReceiver {
         try {
             HttpRequestObject reqObject = HttpRequestObject.getInstance();
             JSONObject jsonRequest = reqObject.getRequestBody(apiCode, inputData);
-            BaseGsonRequest<CheckPointResponse> gsonRequest = new BaseGsonRequest<>(Request.Method.POST, url, CheckPointResponse.class, jsonRequest, DellApp.getHeader(),
+            BaseGsonRequest<CheckPointResponse> gsonRequest = new BaseGsonRequest<>(Request.Method.POST, url, CheckPointResponse.class, jsonRequest, InventoryPlayApp.getHeader(),
                     res -> {
                         ArrayList<CheckPointResponse.TitleList> titleList = res.getTitleList();
                         if (res.getSuccess() && titleList != null && titleList.size() > 0) {
-                            String title = "";
+                            StringBuilder title = new StringBuilder();
                             for (CheckPointResponse.TitleList obj : titleList) {
-                                title = title + obj.getTitle() + "\n";
+                                title.append(obj.getTitle()).append("\n");
                             }
-                            sendNotification(title);
+                            sendNotification(title.toString());
 
                         } else {
                             // clear existing notification from tray
@@ -149,9 +144,7 @@ public class AlarmReceiver extends WakefulBroadcastReceiver {
                             if (mNotificationManager != null)
                                 mNotificationManager.cancel(notificationId);
                         }
-                    }, error -> {
-                AppLogger.e("ERRORRR:" + error.getMessage());
-            });
+                    }, error -> AppLogger.e("ERROR:" + error.getMessage()));
             RequestManager.getRequestQueue().add(gsonRequest).setTag(AppConstants.CHECK_POINT_TITLE_TAG);
 
         } catch (Exception e) {

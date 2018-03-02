@@ -39,16 +39,13 @@ import com.google.zxing.integration.android.IntentResult;
 
 public class AsnTrackFragment extends Fragment {
     public static final String ARG_POSITION = "ARG_POSITION";
-    ViewGroup rootView;
-    MainActivity activity;
-    String[] transTypeArr;
-    TextView titleAsnNo, titleServiceTag;
-    EditText editTextAsnNo, editServiceTag;
-    Button search;
-    ImageView scan;
-    ListView listView;
-    AsnResponse res;
-    String inputAsnId, inputSvcTag, inputTransType;
+    private MainActivity activity;
+    private String[] transTypeArr;
+    private TextView titleAsnNo, titleServiceTag;
+    private EditText editTextAsnNo, editServiceTag;
+    private ListView listView;
+    private AsnResponse res;
+    private String inputAsnId, inputSvcTag, inputTransType;
 
     public static AsnTrackFragment newInstance() {
         return new AsnTrackFragment();
@@ -63,7 +60,7 @@ public class AsnTrackFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        rootView = (ViewGroup) inflater.inflate(
+        ViewGroup rootView = (ViewGroup) inflater.inflate(
                 R.layout.fragment_track_an_asn, container, false);
 
         activity.turnOffToolbarScrolling();
@@ -84,10 +81,10 @@ public class AsnTrackFragment extends Fragment {
         editTextAsnNo = rootView.findViewById(R.id.editTextAsnNo);
         titleServiceTag = rootView.findViewById(R.id.titleServiceTag);
         editServiceTag = rootView.findViewById(R.id.editServiceTag);
-        search = rootView.findViewById(R.id.search);
+        Button search = rootView.findViewById(R.id.search);
         listView = rootView.findViewById(R.id.spinner);
         listView.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
-        scan = rootView.findViewById(R.id.scan);
+        ImageView scan = rootView.findViewById(R.id.scan);
         TextView titleFlow = rootView.findViewById(R.id.titleFlow);
         Helper.getInstance(activity).createShape(titleFlow);
 
@@ -206,8 +203,8 @@ public class AsnTrackFragment extends Fragment {
             loadData();
 
         } else {
-            Helper.getInstance(activity).showToast("Invalid Input",Toast.LENGTH_SHORT,3);
-           // Toast.makeText(activity, "Invalid Input", Toast.LENGTH_SHORT).show();
+            Helper.getInstance(activity).showToast("Invalid Input", Toast.LENGTH_SHORT, 3);
+            // Toast.makeText(activity, "Invalid Input", Toast.LENGTH_SHORT).show();
         }
     }
 

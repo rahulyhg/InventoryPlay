@@ -6,7 +6,7 @@ import android.support.v4.app.FragmentPagerAdapter;
 
 import com.dell.inventoryplay.main.asn.AsnMainFragment;
 import com.dell.inventoryplay.main.healthcheck.HealthCheckMainFragment;
-import com.dell.inventoryplay.main.home.HomeStaticFragment;
+import com.dell.inventoryplay.main.home.HomePageFragment;
 import com.dell.inventoryplay.main.inquiry.InquiryMainFragment;
 
 /**
@@ -21,28 +21,15 @@ public class RootPagerAdapter extends FragmentPagerAdapter {
 
     @Override
     public Fragment getItem(int position) {
-        //  return HealthCheckMainFragment.newInstance();
-
         switch (position) {
             case 0:
-                // return DummyPagerFragment.newInstance();
-                //    return AssistantPagerFragment.newInstance();
-                //    return HomeMainFragment.newInstance();
-                return HomeStaticFragment.newInstance();
+                return HomePageFragment.newInstance();
             case 1:
-                //  return AssistantPagerFragment.newInstance();
-                // return SVGFragment.newInstance();
                 return HealthCheckMainFragment.newInstance();
             case 2:
-                //    return AssistantPagerFragment.newInstance();
                 return InquiryMainFragment.newInstance();
             case 3:
-
                 return AsnMainFragment.newInstance();
-          /*  case 4:
-                // return SVGFragment.newInstance();
-                return AssistantPagerFragment.newInstance();
-                */
         }
         return null;
 

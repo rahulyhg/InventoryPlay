@@ -22,13 +22,12 @@ package com.dell.inventoryplay;
 
 public class AppConfig {
 
-    public static final String API_BASE_URL = "https://dit.apidp.dell.com/inventory/api";
-    public static final String DATAPOWER_API_KEY = "?apikey=87729a58-aadb-45fd-989f-cb235d1493e7";
-    public static final String REST_API_HEALTH_CHECK = API_BASE_URL+"/HealthCheck"+DATAPOWER_API_KEY;
-    public static final String REST_API_LOGIN = API_BASE_URL+"/ValidateUser"+DATAPOWER_API_KEY;
-    public static final String REST_API_CHECK_POINT_TITLE = API_BASE_URL+"/CheckPointHealth/GetTitle"+DATAPOWER_API_KEY;
-    public static final String REST_API_CHECK_POINT_HEALTH = API_BASE_URL+"/CheckPointHealth/GetAlertData"+DATAPOWER_API_KEY;
-    public static final String REST_API_ASN_APP = "http://www.mocky.io/";
-    public static final String REST_API_TRACK_ASN_APP_ERROR = "http://www.mocky.io/";
-    public static Boolean useMockJson= true;
+    private static final String API_BASE_URL = "https://dit.apidp.dell.com/inventory/api";
+
+    private static final String DATAPOWER_API_KEY = "?apikey=87729a58-aadb-45fd-989f-cb235d1493e7";
+    public static final String REST_API_HEALTH_CHECK = API_BASE_URL + "/HealthCheck" + DATAPOWER_API_KEY;
+    public static final String REST_API_LOGIN = API_BASE_URL + "/ValidateUser" + DATAPOWER_API_KEY;
+    public static final String REST_API_CHECK_POINT_TITLE = API_BASE_URL + "/CheckPointHealth/GetTitle" + DATAPOWER_API_KEY;
+    public static final String REST_API_CHECK_POINT_HEALTH = API_BASE_URL + "/CheckPointHealth/GetAlertData" + DATAPOWER_API_KEY;
+    public static Boolean useMockJson = false;
 }
